@@ -50,3 +50,14 @@ Thumbs.db
 # Compiled Files and Build Dirs #
 ##########
 /README.html
+
+# Wordpress #
+##########
+.ftpconfig
+**/wp-admin
+**/wp-includes
+**/wp-content/plugins
+**/wp-content/upgrade
+**/wp-content/languages
+**/*.php
+!**/wp-content/themes/**
