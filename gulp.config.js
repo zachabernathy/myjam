@@ -11,7 +11,9 @@
 const
   package       = require('./package.json'),
   { argv }      = require('yargs'),
+  autoprefixer  = require('autoprefixer'),
   cssnano       = require('cssnano'),
+  tailwindcss   = require('tailwindcss'),
   pxtorem       = require('postcss-pxtorem')
 
 // Transform to a friendlier name
@@ -58,6 +60,7 @@ const dir = {
 
 // Asset Paths
 const paths = {
+  tailwind: './tailwind.config.js',
   manifest: dir.dist + '/rev-manifest.json',
   styles: {
     src: [dir.src + '/styles/**/*.+(scss|sass)', '!' + dir.src + '/styles/vendor/**/*.+(min.css|css)'],
@@ -165,8 +168,10 @@ const config = {
       outputStyle     : PROD ? 'compact' : 'expanded'
     },
     postcss: [
-      cssnano(),
-      pxtorem()
+      tailwindcss(paths.tailwind),
+      cssnano,
+      pxtorem,
+      autoprefixer
     ],
     vendor: {
       basename: 'vendor'

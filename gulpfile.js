@@ -22,6 +22,7 @@ const
   postcss       = require('gulp-postcss'),
   rename        = require('gulp-rename'),
   rev           = require('gulp-rev'),
+  revDistClean  = require('gulp-rev-dist-clean'),
   sass          = require('gulp-sass'),
   sourcemaps    = require('gulp-sourcemaps'),
   uglify        = require('gulp-uglify'),
@@ -30,7 +31,6 @@ const
   Readable      = require('stream').Readable,
   Vinyl         = require('vinyl')
 
-const { pack } = require('tar-stream')
 // Import config
 const {
   PROD,
@@ -97,6 +97,11 @@ const src_move = () => {
 // Clean asset folders
 const clean_assets = () => {
   return del(config.clean.assets, config.clean.opt)
+}
+
+const rev_dist_clean = () => {
+  return gulp.src(config.clean.assets, {read: false})
+        .pipe(revDistClean(paths.manifest))
 }
 
 // Create theme style file
@@ -210,8 +215,8 @@ const reload = done => {
 
 // Watch for changes
 const watch = () => {
-  gulp.watch(paths.scripts.src, scripts)
-  gulp.watch(paths.styles.src, styles)
+  gulp.watch(paths.scripts.src, gulp.series(scripts, rev_dist_clean))
+  gulp.watch(paths.styles.src, gulp.series(styles, rev_dist_clean))
   gulp.watch(paths.fonts.src, gulp.series(fonts, reload))
   gulp.watch(paths.images.src, gulp.series(images, reload))
   gulp.watch(paths.php.src, html)

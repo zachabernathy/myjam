@@ -33,14 +33,6 @@ src/
 *.sql
 *.env
 
-# OS generated files #
-######################
-**.DS_Store*
-ehthumbs.db
-Icon?
-Thumbs.db
-._*
-
 # SASS #
 ##########
 **/.sass-cache
@@ -53,11 +45,23 @@ Thumbs.db
 
 # Wordpress #
 ##########
+.htaccess
 .ftpconfig
+readme.html
+license.txt
 **/wp-admin
 **/wp-includes
 **/wp-content/plugins
 **/wp-content/upgrade
-**/wp-content/languages
+**/wp-content/uploads
 **/*.php
 !**/wp-content/themes/**
+
+# OS generated files #
+######################
+.DS_Store
+**.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+._*
